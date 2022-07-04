@@ -1,4 +1,4 @@
-import "./components/product.js";
+import "./components/product.js"
 
 new Vue({
   el: "#app",
@@ -12,28 +12,28 @@ new Vue({
   created: function () {
     fetch("assets/data/product.json")
       .then((response) => response.json())
-      .then((data) => (this.productData = data));
+      .then((data) => (this.productData = data))
   },
   computed: {
     currentPageItems() {
       return this.productData.slice(
         this.pageNumber * this.perPage,
         this.pageNumber * this.perPage + 1 + this.perPage
-      );
+      )
     },
     filteredLists() {
       return this.currentPageItems.filter((item) => {
         return (
           item.name.toLowerCase().includes(this.search.toLowerCase()) ||
           item.id.toLowerCase().includes(this.search.toLowerCase())
-        );
-      });
+        )
+      })
     },
     handleSelected() {
       if (this.productChecked.length > 0) {
-        return true;
+        return true
       } else {
-        return false;
+        return false
       }
     },
   },
@@ -44,30 +44,30 @@ new Vue({
     sortedList(e) {
       if (e.target.value == "1") {
         this.currentPageItems.sort((n1, n2) => {
-          let a = n1.name.toLowerCase();
-          let b = n2.name.toLowerCase();
-          return a === b ? 0 : a > b ? 1 : -1;
-        });
-        console.log("A-Z");
+          let a = n1.name.toLowerCase()
+          let b = n2.name.toLowerCase()
+          return a === b ? 0 : a > b ? 1 : -1
+        })
+        console.log("A-Z")
       } else {
-        this.currentPageItems.reverse();
-        console.log("Z-A");
+        this.currentPageItems.reverse()
+        console.log("Z-A")
       }
     },
     prev() {
-      this.pageNumber--;
+      this.pageNumber--
     },
     next() {
-      this.pageNumber++;
+      this.pageNumber++
     },
     handleSave() {
       localStorage.setItem(
         "selectedProducts",
         JSON.stringify(this.productChecked)
-      );
+      )
     },
     getProductsLocal() {
-      return JSON.parse(localStorage.getItem("selectedProducts")) || [];
+      return JSON.parse(localStorage.getItem("selectedProducts")) || []
     },
   },
-});
+})

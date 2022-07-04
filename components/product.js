@@ -22,10 +22,10 @@ Vue.component('product-item', {
     computed: {
         model: {
           get() {
-            return this.value;
+            return this.value
           },
           set(value) {
-            this.$emit("input", value);
+            this.$emit("input", value)
           },
         },
     },
