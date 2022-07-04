@@ -87,6 +87,32 @@ html {
     display: flex;
 }
 
+.product-selected {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border: 1.1px solid #767676;
+    border-radius: 2px;
+    cursor: pointer;
+    appearance: none;
+}
+
+.product-selected::after {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 3px;
+    color: #fff;
+    width: 10px;
+    height: 2.5px;
+    background: #fff;
+}
+
+.product-selected:checked {
+    background-color: #F65E5D;
+    border: none;
+}
+
 .product-head-text {
     margin-left: 10px;
     font-weight: 700;

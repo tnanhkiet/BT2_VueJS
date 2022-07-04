@@ -7,7 +7,7 @@ new Vue({
     perPage: 10,
     pageNumber: 0,
     productData: [],
-    productChecked: [],
+    productChecked: []
   },
   created: function () {
     fetch("assets/data/product.json")
@@ -43,15 +43,13 @@ new Vue({
   methods: {
     sortedList(e) {
       if (e.target.value == "1") {
-        this.currentPageItems.sort((n1, n2) => {
+        this.productData.sort((n1, n2) => {
           let a = n1.name.toLowerCase()
           let b = n2.name.toLowerCase()
           return a === b ? 0 : a > b ? 1 : -1
         })
-        console.log("A-Z")
       } else {
-        this.currentPageItems.reverse()
-        console.log("Z-A")
+        this.productData.reverse()
       }
     },
     prev() {
