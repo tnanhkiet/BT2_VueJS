@@ -16,15 +16,15 @@
         <div class="action-bar">
             <input type="text" placeholder="Search product by name, tag, id..." class="search" v-model="search">
             <img src="./assets/icon/search.svg" class="search-icon">
-            <select name="" id="" class="select">
-                <option value="Az">Sort: Product title A - Z</option>
-                <option value="Za">Sort: Product title Z - A</option>
+            <select name="" id="" class="select" @change="sortedList">
+                <option value="1">Sort: Product title A - Z</option>
+                <option value="2">Sort: Product title Z - A</option>
             </select>
         </div>
         <div class="product">
             <div class="product-head">
                 <span>
-                    <input type="checkbox" class="product-checkbox" v-model="handleSelected">
+                    <input type="checkbox" class="product-checkbox" v-model="handleSelected" @click="productChecked = []">
                     <p class="product-head-text" v-if="handleSelected == false">Product</p>
                     <p class="product-head-text" v-else>{{ productChecked.length }} Products selected</p>
                 </span>
