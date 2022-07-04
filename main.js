@@ -4,33 +4,28 @@ new Vue({
   el: "#app",
   data: {
     search: "",
-    perPage: 10,
-    pageNumber: 0,
-    productData: [],
-    productChecked: []
+    pageNumber: 1,
+    productsData: [],
+    productsChecked: [],
+    filteredLists: []
   },
   created: function () {
     fetch("assets/data/product.json")
       .then((response) => response.json())
-      .then((data) => (this.productData = data))
+      .then((data) => (this.productsData = data))
   },
   computed: {
-    currentPageItems() {
-      return this.productData.slice(
-        this.pageNumber * this.perPage,
-        this.pageNumber * this.perPage + 1 + this.perPage
-      )
-    },
-    filteredLists() {
-      return this.currentPageItems.filter((item) => {
+    productsShow() {
+      this.searchedProducts = this.productsData.filter((item) => {
         return (
           item.name.toLowerCase().includes(this.search.toLowerCase()) ||
           item.id.toLowerCase().includes(this.search.toLowerCase())
         )
       })
+      return this.searchedProducts.slice(10 * (this.pageNumber - 1), 10 * this.pageNumber)
     },
     handleSelected() {
-      if (this.productChecked.length > 0) {
+      if (this.productsChecked.length > 0) {
         return true
       } else {
         return false
@@ -38,30 +33,34 @@ new Vue({
     },
   },
   mounted() {
-    this.productChecked = this.getProductsLocal()
+    this.productsChecked = this.getProductsLocal()
   },
   methods: {
     sortedList(e) {
       if (e.target.value == "1") {
-        this.productData.sort((n1, n2) => {
+        this.productsData.sort((n1, n2) => {
           let a = n1.name.toLowerCase()
           let b = n2.name.toLowerCase()
           return a === b ? 0 : a > b ? 1 : -1
         })
       } else {
-        this.productData.reverse()
+        this.productsData.reverse()
       }
     },
     prev() {
-      this.pageNumber--
+      if(this.pageNumber > 1) {
+        this.pageNumber--
+      }
     },
     next() {
-      this.pageNumber++
+      if (this.pageNumber < Math.ceil(this.searchedProducts.length / 10)) {
+        this.pageNumber++
+      }
     },
     handleSave() {
       localStorage.setItem(
         "selectedProducts",
-        JSON.stringify(this.productChecked)
+        JSON.stringify(this.productsChecked)
       )
     },
     getProductsLocal() {

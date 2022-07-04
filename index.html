@@ -17,35 +17,35 @@
             <input type="text" placeholder="Search product by name, tag, id..." class="search" v-model="search">
             <img src="./assets/icon/search.svg" class="search-icon">
             <select name="" id="" class="select" @change="sortedList">
-                <option value="1" checked>Sort: Product title A - Z</option>
+                <option value="1" selected>Sort: Product title A - Z</option>
                 <option value="2">Sort: Product title Z - A</option>
             </select>
         </div>
         <div class="product">
             <div class="product-head">
                 <span>
-                    <input type="checkbox" class="product-selected" v-model="handleSelected" @click="productChecked = []">
+                    <input type="checkbox" class="product-selected" v-model="handleSelected" @click="productsChecked = []">
                     <p class="product-head-text" v-if="handleSelected == false">Product</p>
-                    <p class="product-head-text" v-else>{{ productChecked.length }} Products selected</p>
+                    <p class="product-head-text" v-else>{{ productsChecked.length }} Products selected</p>
                 </span>
                 <p class="product-head-text">Price</p>
             </div>
             <div class="product-list">
                 <product-item
-                    v-for="item in filteredLists"
+                    v-for="item in productsShow"
                     :key="item.id"
                     :name="item.name"
                     :id="item.id"
                     :price="item.price"
                     :image="item.image"
-                    v-model="productChecked">
+                    v-model="productsChecked">
                 </product-item>
             </div>
         </div>
         <div class="footer">
             <div>
-                <button class="btn-left btn-prev"  @click="prev" :disabled="pageNumber == 0" :class="{ disabled: pageNumber == 0 }"><img src="./assets/icon/prev.svg"> Prev</button>
-                <button class="btn-left btn-next"  @click="next" :disabled="pageNumber == 10" :class="{ disabled: pageNumber == 10 }">Next <img src="./assets/icon/next.svg"></button>
+                <button class="btn-left btn-prev"  @click="prev" :class="{disabled: pageNumber == 1}"><img src="./assets/icon/prev.svg"> Prev</button>
+                <button class="btn-left btn-next"  @click="next" :class="{disabled: pageNumber == Math.ceil(searchedProducts.length/10)}">Next <img src="./assets/icon/next.svg"></button>
             </div>
             <div>
                 <button class="btn-right btn-cancel">Cancel</button>
